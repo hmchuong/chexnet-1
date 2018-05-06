@@ -112,9 +112,9 @@ class ChexnetTrainer ():
     def epochTrain (model, dataLoader, optimizer, scheduler, epochMax, classCount, loss):
         print("Epoch training...")
         model.train()
-
+        total = len(dataLoader)
         for batchID, (input, target) in enumerate (dataLoader):
-            print("Batch ID: ", batchID)
+            print("Steps: {}/{}".format(batchID+1,total))
             target = target.cuda(async = True)
 
             varInput = torch.autograd.Variable(input)
