@@ -25,7 +25,7 @@ def runTrain():
     timestampLaunch = timestampDate + '-' + timestampTime
 
     #---- Path to the directory with images
-    pathDirData = '/home/minhchuong_itus/bse_chestzray'
+    pathDirData = '/home/minhchuong_itus/bse_chestxray'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
