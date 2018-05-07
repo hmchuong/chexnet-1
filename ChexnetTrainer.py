@@ -98,7 +98,7 @@ class ChexnetTrainer ():
             timestampDate = time.strftime("%d%m%Y")
             timestampEND = timestampDate + '-' + timestampTime
 
-            scheduler.step(lassVal)
+            scheduler.step(lossVal)
 
             if lossVal < lossMIN:
                 lossMIN = lossVal
