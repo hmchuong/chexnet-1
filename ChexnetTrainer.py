@@ -146,11 +146,12 @@ class ChexnetTrainer ():
 
             varInput = torch.autograd.Variable(input, volatile=True)
             varTarget = torch.autograd.Variable(target, volatile=True)
+            torch.cuda.empty_cache()
             varOutput = model(varInput)
-
+            torch.cuda.empty_cache()
             losstensor = loss(varOutput, varTarget)
             losstensorMean += losstensor
-
+            torch.cuda.empty_cache()
             lossVal += losstensor.data[0]
             lossValNorm += 1
 
