@@ -142,17 +142,15 @@ class ChexnetTrainer ():
         for i, (input, target) in enumerate (dataLoader):
             print("Steps: {}/{}".format(i+1,total))
             torch.cuda.empty_cache()
-            target = target.cuda(async=True)
+            target = target.cuda(async=False)
 
             varInput = torch.autograd.Variable(input, volatile=True)
             varTarget = torch.autograd.Variable(target, volatile=True)
-            torch.cuda.empty_cache()
             varOutput = model(varInput)
-            torch.cuda.empty_cache()
             losstensor = loss(varOutput, varTarget)
             losstensorMean += losstensor
-            torch.cuda.empty_cache()
             lossVal += losstensor.data[0]
+
             lossValNorm += 1
 
         outLoss = lossVal / lossValNorm
