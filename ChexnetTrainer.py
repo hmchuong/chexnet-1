@@ -148,8 +148,8 @@ class ChexnetTrainer ():
                 varTarget = torch.autograd.Variable(target)
                 varOutput = model(varInput)
                 losstensor = loss(varOutput, varTarget)
-                losstensorMean += losstensor
-                lossVal += losstensor.data.item()#losstensor.data[0]
+                losstensorMean += float(losstensor)
+                lossVal += losstensor.item()#losstensor.data[0]
                 lossValNorm += 1
 
         outLoss = lossVal / lossValNorm
