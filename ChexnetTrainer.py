@@ -141,7 +141,8 @@ class ChexnetTrainer ():
         total = len(dataLoader)
         for i, (input, target) in enumerate (dataLoader):
             print("Steps: {}/{}".format(i+1,total))
-            target = target.cuda(async=False)
+            torch.cuda.empty_cache()
+            target = target.cuda(async=True)
 
             varInput = torch.autograd.Variable(input, volatile=True)
             varTarget = torch.autograd.Variable(target, volatile=True)
