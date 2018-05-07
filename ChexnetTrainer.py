@@ -150,9 +150,9 @@ class ChexnetTrainer ():
             losstensor = loss(varOutput, varTarget)
             losstensorMean += losstensor
             lossVal += losstensor.data[0]
-
             lossValNorm += 1
-            del varInput, varTarget, varOutput, losstensor
+            print(type(lossVal))
+            print(type(losstensorMean))
 
         outLoss = lossVal / lossValNorm
         losstensorMean = losstensorMean / lossValNorm
