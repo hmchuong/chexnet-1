@@ -98,7 +98,7 @@ class ChexnetTrainer ():
             timestampDate = time.strftime("%d%m%Y")
             timestampEND = timestampDate + '-' + timestampTime
 
-            scheduler.step(losstensor.item())
+            scheduler.step(lassVal)
 
             if lossVal < lossMIN:
                 lossMIN = lossVal
@@ -148,7 +148,7 @@ class ChexnetTrainer ():
                 varTarget = torch.autograd.Variable(target)
                 varOutput = model(varInput)
                 losstensor = loss(varOutput, varTarget)
-                losstensorMean += losstensor
+                losstensorMean += losstensor.item()
                 lossVal += losstensor.item()#losstensor.data[0]
                 lossValNorm += 1
 
