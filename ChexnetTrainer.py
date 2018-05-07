@@ -92,7 +92,7 @@ class ChexnetTrainer ():
             timestampSTART = timestampDate + '-' + timestampTime
 
             ChexnetTrainer.epochTrain (model, dataLoaderTrain, optimizer, scheduler, trMaxEpoch, nnClassCount, loss)
-            lossVal, losstensor = ChexnetTrainer.epochVal (model, dataLoaderVal, optimizer, scheduler, trMaxEpoch, nnClassCount, loss)
+            lossVal, losstensor = ChexnetTrainer.epochVal1 (model, dataLoaderVal, optimizer, scheduler, trMaxEpoch, nnClassCount, loss)
 
             timestampTime = time.strftime("%H%M%S")
             timestampDate = time.strftime("%d%m%Y")
@@ -158,6 +158,30 @@ class ChexnetTrainer ():
         losstensorMean = losstensorMean / lossValNorm
 
         return outLoss, losstensorMean
+
+    def epochVal1(model, dataLoader, optimizer, scheduler, epochMax, classCount, loss):
+
+        outLoss = torch.FloatTensor()
+        outLoss = outLoss.cuda()
+        losstensorMean = torch.FloatTensor()
+        losstensorMean = losstensorMean.cuda()
+
+        model.eval ()
+
+        print("Epoch evaluate...")
+        total = len(dataLoader)
+        for i, (input, target) in enumerate (dataLoader):
+            print("Steps: {}/{}".format(i+1,total))
+            target = target.cuda(async=True)
+
+            varInput = torch.autograd.Variable(input, volatile=True)
+            varTarget = torch.autograd.Variable(target, volatile=True)
+            varOutput = model(varInput)
+            losstensor = loss(varOutput, varTarget)
+            losstensorMean = torch.cat((losstensorMean, losstensor), 0)
+            outLoss = torch.cat((outLoss, losstensor.data[0]), 0)
+
+        return torch.mean(outLoss), torch(losstensorMean)
 
     #--------------------------------------------------------------------------------
 
