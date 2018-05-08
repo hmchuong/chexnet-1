@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    runTest()
-    #runTrain()
+    #runTest()
+    runTrain()
 
 #--------------------------------------------------------------------------------
 
@@ -25,7 +25,8 @@ def runTrain():
     timestampLaunch = timestampDate + '-' + timestampTime
 
     #---- Path to the directory with images
-    pathDirData = '/home/minhchuong_itus/bse_chestxray'
+    #pathDirData = '/home/minhchuong_itus/bse_chestxray'
+    pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
@@ -48,7 +49,7 @@ def runTrain():
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'm-' + timestampLaunch + '.pth.tar'
+    pathModel = 'models/m-' + timestampLaunch + '.pth.tar'
 
     print ('Training NN architecture = ', nnArchitecture)
     ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
