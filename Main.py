@@ -37,7 +37,7 @@ def runTrain():
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
-    nnArchitecture = DENSENET121
+    nnArchitecture = DENSENET201
     nnIsTrained = True
     nnClassCount = 14
 
