@@ -253,9 +253,10 @@ class ChexnetTrainer ():
         outPRED = torch.FloatTensor().cuda()
 
         model.eval()
-
+        print("Testing...")
+        total = len(dataLoaderTest)
         for i, (input, target) in enumerate(dataLoaderTest):
-
+            print("Steps: {}/{}".format(i+1,total))
             target = target.cuda()
             outGT = torch.cat((outGT, target), 0)
 
