@@ -260,13 +260,13 @@ class ChexnetTrainer ():
             outGT = torch.cat((outGT, target), 0)
 
             bs, n_crops, c, h, w = input.size()
+            with torch.no_grad():
+                varInput = torch.autograd.Variable(input.view(-1, c, h, w).cuda())
 
-            varInput = torch.autograd.Variable(input.view(-1, c, h, w).cuda(), volatile=True)
+                out = model(varInput)
+                outMean = out.view(bs, n_crops, -1).mean(1)
 
-            out = model(varInput)
-            outMean = out.view(bs, n_crops, -1).mean(1)
-
-            outPRED = torch.cat((outPRED, outMean.data), 0)
+                outPRED = torch.cat((outPRED, outMean.data), 0)
 
         aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
         aurocMean = np.array(aurocIndividual).mean()
