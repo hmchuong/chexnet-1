@@ -110,11 +110,13 @@ class ChexnetTrainer ():
     #--------------------------------------------------------------------------------
 
     def epochTrain (model, dataLoader, optimizer, scheduler, epochMax, classCount, loss):
-        print("Epoch training...")
+        print("Epoch training...\n")
         model.train()
         total = len(dataLoader)
         for batchID, (input, target) in enumerate (dataLoader):
-            print("\rSteps: {}/{}".format(batchID+1,total))
+            sys.stdout.write('\r')
+            sys.stdout.write("\rSteps: {}/{}".format(batchID+1,total))
+            sys.stdout.flush()
             target = target.cuda(async = True)
 
             varInput = torch.autograd.Variable(input)
@@ -137,10 +139,12 @@ class ChexnetTrainer ():
         lossValNorm = 0
 
         losstensorMean = 0
-        print("Epoch evaluate...")
+        print("Epoch evaluate...\n")
         total = len(dataLoader)
         for i, (input, target) in enumerate (dataLoader):
-            print("\rSteps: {}/{}".format(i+1,total))
+            sys.stdout.write('\r')
+            sys.stdout.write("\rSteps: {}/{}".format(id+1,total))
+            sys.stdout.flush()
             torch.cuda.empty_cache()
             target = target.cuda(async=True)
             with torch.no_grad():
@@ -166,7 +170,7 @@ class ChexnetTrainer ():
 
         model.eval ()
 
-        print("Epoch evaluate...")
+        print("Epoch evaluate...\n")
         total = len(dataLoader)
         for i, (input, target) in enumerate (dataLoader):
             print("Steps: {}/{}".format(i+1,total))
@@ -253,10 +257,12 @@ class ChexnetTrainer ():
         outPRED = torch.FloatTensor().cuda()
 
         model.eval()
-        print("Testing...")
+        print("Testing...\n")
         total = len(dataLoaderTest)
         for i, (input, target) in enumerate(dataLoaderTest):
-            print("Steps: {}/{}".format(i+1,total))
+            sys.stdout.write('\r')
+            sys.stdout.write("\rSteps: {}/{}".format(i+1,total))
+            sys.stdout.flush()
             target = target.cuda()
             outGT = torch.cat((outGT, target), 0)
 
