@@ -103,14 +103,14 @@ class ChexnetTrainer ():
             if lossVal < lossMIN:
                 lossMIN = lossVal
                 torch.save({'epoch': epochID + 1, 'state_dict': model.state_dict(), 'best_loss': lossMIN, 'optimizer' : optimizer.state_dict()}, 'm-' + launchTimestamp + '.pth.tar')
-                print ('Epoch [' + str(epochID + 1) + '] [save] [' + timestampEND + '] loss= ' + str(lossVal))
+                print ('\nEpoch [' + str(epochID + 1) + '] [save] [' + timestampEND + '] loss= ' + str(lossVal))
             else:
-                print ('Epoch [' + str(epochID + 1) + '] [----] [' + timestampEND + '] loss= ' + str(lossVal))
+                print ('\nEpoch [' + str(epochID + 1) + '] [----] [' + timestampEND + '] loss= ' + str(lossVal))
 
     #--------------------------------------------------------------------------------
 
     def epochTrain (model, dataLoader, optimizer, scheduler, epochMax, classCount, loss):
-        print("\nEpoch training...\n")
+        print("\nEpoch training...")
         model.train()
         total = len(dataLoader)
         for batchID, (input, target) in enumerate (dataLoader):
@@ -139,7 +139,7 @@ class ChexnetTrainer ():
         lossValNorm = 0
 
         losstensorMean = 0
-        print("\nEpoch evaluate...\n")
+        print("\nEpoch evaluate...")
         total = len(dataLoader)
         for i, (input, target) in enumerate (dataLoader):
             sys.stdout.write('\r')
@@ -170,7 +170,7 @@ class ChexnetTrainer ():
 
         model.eval ()
 
-        print("Epoch evaluate...\n")
+        print("Epoch evaluate...")
         total = len(dataLoader)
         for i, (input, target) in enumerate (dataLoader):
             print("Steps: {}/{}".format(i+1,total))
@@ -278,7 +278,7 @@ class ChexnetTrainer ():
         aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
         aurocMean = np.array(aurocIndividual).mean()
 
-        print ('AUROC mean ', aurocMean)
+        print ('\nAUROC mean ', aurocMean)
 
         for i in range (0, len(aurocIndividual)):
             print (CLASS_NAMES[i], ' ', aurocIndividual[i])
