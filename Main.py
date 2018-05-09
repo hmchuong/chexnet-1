@@ -63,7 +63,7 @@ def runTest():
 
     pathDirData = '/home/minhchuong_itus/bse_chestxray'
     pathFileTest = './dataset/test.txt'
-    nnArchitecture = 'DENSE-NET-121'
+    nnArchitecture = 'DENSE-NET-201'
     nnIsTrained = True
     nnClassCount = 14
     trBatchSize = 200
