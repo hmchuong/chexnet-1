@@ -25,19 +25,19 @@ def runTrain():
     timestampLaunch = timestampDate + '-' + timestampTime
 
     #---- Path to the directory with images
-    #pathDirData = '/home/minhchuong_itus/bse_chestxray'
-    pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
+    pathDirData = '/home/minhchuong_itus/bse_chestxray'
+    #pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
     #---- Example: images_011/00027736_001.png 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-    pathFileTrain = './dataset/train.txt'
-    pathFileVal = './dataset/dev.txt'
-    pathFileTest = './dataset/test.txt'
+    pathFileTrain = './dataset/train_1.txt'
+    pathFileVal = './dataset/val_1.txt'
+    pathFileTest = './dataset/test_1.txt'
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
-    nnArchitecture = DENSENET201
+    nnArchitecture = DENSENET121
     nnIsTrained = True
     nnClassCount = 14
 
