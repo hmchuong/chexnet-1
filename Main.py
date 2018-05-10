@@ -13,7 +13,7 @@ def main ():
     runTrain()
 
 #--------------------------------------------------------------------------------
-
+m-10052018-001940.pth.tar: bse121auth
 def runTrain():
 
     DENSENET121 = 'DENSE-NET-121'
@@ -25,8 +25,8 @@ def runTrain():
     timestampLaunch = timestampDate + '-' + timestampTime
 
     #---- Path to the directory with images
-    #pathDirData = '/home/minhchuong_itus/bse_chestxray'
-    pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
+    pathDirData = '/home/minhchuong_itus/bse_chestxray'
+    #pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
@@ -37,19 +37,19 @@ def runTrain():
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
-    nnArchitecture = DENSENET121
+    nnArchitecture = DENSENET201
     nnIsTrained = True
     nnClassCount = 14
 
     #---- Training settings: batch size, maximum number of epochs
-    trBatchSize = 200
+    trBatchSize = 128
     trMaxEpoch = 100
 
     #---- Parameters related to image transforms: size of the down-scaled image, cropped image
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'm-' + timestampLaunch + '.pth.tar'
+    pathModel = 'Um-' + timestampLaunch + '.pth.tar'
 
     print ('Training NN architecture = ', nnArchitecture)
     ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
