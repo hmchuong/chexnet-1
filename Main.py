@@ -48,7 +48,7 @@ def runTrain():
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'Um-' + timestampLaunch + '.pth.tar'
+    pathModel = 'm-' + timestampLaunch + '.pth.tar'
 
     print ('Training NN architecture = ', nnArchitecture)
     ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
@@ -60,17 +60,17 @@ def runTrain():
 
 def runTest():
 
-    #pathDirData = '/home/minhchuong_itus/bse_chestxray'
-    pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
+    pathDirData = '/home/minhchuong_itus/bse_chestxray'
+    #pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
     pathFileTest = './dataset/test_1.txt'
-    nnArchitecture = 'DENSE-NET-121'
+    nnArchitecture = 'DENSE-NET-201'
     nnIsTrained = True
     nnClassCount = 14
-    trBatchSize = 200
+    trBatchSize = 128
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'm-10052018-085433.pth.tar'
+    pathModel = 'm-10052018-125317.pth.tar'
 
     timestampLaunch = ''
 
