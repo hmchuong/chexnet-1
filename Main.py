@@ -9,11 +9,10 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    #runTest()
-    runTrain()
+    runTest()
+    #runTrain()
 
 #--------------------------------------------------------------------------------
-m-10052018-001940.pth.tar: bse121auth
 def runTrain():
 
     DENSENET121 = 'DENSE-NET-121'
@@ -63,15 +62,15 @@ def runTest():
 
     #pathDirData = '/home/minhchuong_itus/bse_chestxray'
     pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
-    pathFileTest = './dataset/test.txt'
-    nnArchitecture = 'DENSE-NET-169'
+    pathFileTest = './dataset/test_1.txt'
+    nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
     trBatchSize = 200
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'models/m-25012018-123527.pth.tar'
+    pathModel = 'models/m-10052018-085433.pth.tar'
 
     timestampLaunch = ''
 
