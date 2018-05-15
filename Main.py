@@ -24,8 +24,8 @@ def runTrain():
     timestampLaunch = timestampDate + '-' + timestampTime
 
     #---- Path to the directory with images
-    pathDirData = '/home/minhchuong_itus/bse_chestxray'
-    #pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
+    pathDirData = '/home/nthieuitus/bse_chestxray'
+    #pathDirData = '/home/nthieuitus/chestxray'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
@@ -41,7 +41,7 @@ def runTrain():
     nnClassCount = 14
 
     #---- Training settings: batch size, maximum number of epochs
-    trBatchSize = 40
+    trBatchSize = 128
     trMaxEpoch = 100
 
     #---- Parameters related to image transforms: size of the down-scaled image, cropped image
