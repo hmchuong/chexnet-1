@@ -191,14 +191,11 @@ class ChexnetTrainer ():
 
         for i in range(datanpGT.shape[1]):
             fpr, tpr, thresholds = roc_curve(datanpGT[:, i], datanpPRED[:, i], pos_label=1)
-            print('Class {}'.format(i))
 
             chosen = thresholds[0]
             for j in range(len(fpr)):
                 if tpr[j] > 0.5 and fpr[j] < 0.3:
                     chosen = thresholds[j]
-                else:
-                    break
             if chosen >= 1.0:
                 print("Thresholds {}".format(j))
                 print(thresholds)
