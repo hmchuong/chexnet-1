@@ -182,34 +182,33 @@ class ChexnetTrainer ():
         return outAUROC
 
     def splitResult(dataGT, dataPRED, imagePaths):
-        threshold = 0.5
         datanpGT = dataGT.cpu().numpy()
         datanpPRED = dataPRED.cpu().numpy()
         root_path = '/home/nthieuitus/bse_analyse'
+        analyse_dict = {}
         for i in range(datanpGT.shape[0]):
-            predict = np.array(datanpPRED[i,:])
-            for c in range(len(predict)):
-                if (predict[c] > threshold):
-                    predict[c] = 1
+            for j in range(datanpGT.shape[1]):
+                if (datanpPRED[i,j] > 0.5 and datanpGT[i,j] == 1) or (datanpPRED[i,j] <= 0.5 and datanpGT[i,j] == 0):
+                    # Copy to right label
+                    folder_path = os.path.join(root_path, str(j), 'right')
+                    if not os.path.exists(folder_path):
+                        os.makedirs(folder_path)
+                    counter = analyse_dict.get(folder_path, 0)
+                    counter += 1
+                    analyse_dict[folder_path] = counter
+                    if counter > 20:
+                        continue
+                    shutil.copy2(imagePaths[i], folder_path)
                 else:
-                    predict[c] = 0
-            isRight = True
-            for c in range(len(predict)):
-                if predict[c] != datanpGT[i,c]:
-                    isRight = False
-                    break
-            if isRight:
-                folder_path = os.path.join(root_path, 'right')
-                if not os.path.exists(folder_path):
-                    os.makedirs(folder_path)
-                shutil.copy2(imagePaths[i], folder_path)
-            else:
-                print("Wrong prediction {}", imagePaths[i])
-                folder_path = os.path.join(root_path, 'wrong')
-                if not os.path.exists(folder_path):
-                    os.makedirs(folder_path)
-                shutil.copy2(imagePaths[i], folder_path)
-
+                    # Copy to wrong label
+                    print("Wrong prediction {}", imagePaths[i])
+                    folder_path = os.path.join(root_path, str(j), 'wrong')
+                    if not os.path.exists(folder_path):
+                        os.makedirs(folder_path)
+                    analyse_dict[folder_path] = counter
+                    if counter > 20:
+                        continue
+                    shutil.copy2(imagePaths[i], folder_path)
 
 
 
