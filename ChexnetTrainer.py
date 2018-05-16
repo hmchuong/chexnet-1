@@ -198,7 +198,7 @@ class ChexnetTrainer ():
             for j in range(len(fpr)):
                 if ((1-tpr[0])**2 + fpr[j]**2) <= min_distance**2:
                     chosen = j
-                    min_distance = math.sqrt((1-tpr[0])**2 + (fpr[j])**2))
+                    min_distance = math.sqrt((1-tpr[0])**2 + (fpr[j])**2)
             if thresholds[chosen] >= 1.0:
                 print("Thresholds {}".format(j))
                 print(thresholds)
