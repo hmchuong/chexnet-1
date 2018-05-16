@@ -191,14 +191,14 @@ class ChexnetTrainer ():
                     # Copy to right label
                     folder_path = os.path.join(root_path, str(j), 'right')
                     if not os.path.exists(folder_path):
-                        os.mkdir(folder_path)
+                        os.makedirs(folder_path)
                     shutil.copy2(imagePaths[i], folder_path)
                 else:
                     # Copy to wrong label
                     print("Wrong prediction {}", imagePaths[i])
                     folder_path = os.path.join(root_path, str(j), 'wrong')
                     if not os.path.exists(folder_path):
-                        os.mkdir(folder_path)
+                        os.makedirs(folder_path)
                     shutil.copy2(imagePaths[i], folder_path)
 
 
