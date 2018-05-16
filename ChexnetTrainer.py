@@ -3,6 +3,7 @@ import numpy as np
 import time
 import sys
 import shutil
+import math
 
 import torch
 import torch.nn as nn
@@ -185,18 +186,20 @@ class ChexnetTrainer ():
     def splitResult(dataGT, dataPRED, imagePaths):
         datanpGT = dataGT.cpu().numpy()
         datanpPRED = dataPRED.cpu().numpy()
-        root_path = '/home/nthieuitus/bse_analyse'
+        root_path = '/home/nthieuitus/bse_analyse_1'
         analyse_dict = {}
         class_thresholds = []
 
         for i in range(datanpGT.shape[1]):
             fpr, tpr, thresholds = roc_curve(datanpGT[:, i], datanpPRED[:, i], pos_label=1)
 
-            chosen = thresholds[0]
+            chosen_index = 0
+            min_distance = 1000000
             for j in range(len(fpr)):
-                if tpr[j] > 0.5 and fpr[j] < 0.3:
-                    chosen = thresholds[j]
-            if chosen >= 1.0:
+                if ((1-tpr[0])**2 + (fpr[j])**2)) <= min_distance**2:
+                    chosen = j
+                    min_distance = math.sqrt((1-tpr[0])**2 + (fpr[j])**2))
+            if thresholds[chosen] >= 1.0:
                 print("Thresholds {}".format(j))
                 print(thresholds)
                 print("TPR")
@@ -204,7 +207,7 @@ class ChexnetTrainer ():
                 print("FPR")
                 print(fpr)
 
-            class_thresholds.append(chosen)
+            class_thresholds.append(thresholds[chosen])
 
         print("Thresholds for all classes")
         print(class_thresholds)
@@ -224,7 +227,7 @@ class ChexnetTrainer ():
                     shutil.copy2(imagePaths[i], folder_path)
                 else:
                     # Copy to wrong label
-                    print("Wrong prediction {}".format(imagePaths[i]))
+                    #print("Wrong prediction {}".format(imagePaths[i]))
                     folder_path = os.path.join(root_path, str(j), 'wrong')
                     if not os.path.exists(folder_path):
                         os.makedirs(folder_path)
