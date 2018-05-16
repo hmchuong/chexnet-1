@@ -190,7 +190,7 @@ class ChexnetTrainer ():
         class_thresholds = []
 
         for i in range(datanpGT.shape[1]):
-            fpr, tpr, thresholds = roc_curve(datanpGT[:, i], datanpPRED[:, i]), pos_label=1)
+            fpr, tpr, thresholds = roc_curve(datanpGT[:, i], datanpPRED[:, i], pos_label=1)
             print('Class {}'.format(i))
             print("Thresholds")
             print(thresholds)
