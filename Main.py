@@ -61,10 +61,10 @@ def runTrain():
 
 def runTest():
 
-    pathDirData = '/home/nthieuitus/AA.pth.tar'
+    pathDirData = '/home/nthieuitus/bse_chestxray'
     #pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
     pathFileTest = './dataset/test_1.txt'
-    nnArchitecture = 'DENSE-NET-201'
+    nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
     trBatchSize = 128
