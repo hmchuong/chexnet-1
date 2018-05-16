@@ -2,6 +2,7 @@ import os
 import numpy as np
 import time
 import sys
+import shutil
 
 import torch
 import torch.nn as nn
@@ -161,30 +162,6 @@ class ChexnetTrainer ():
 
         return outLoss, losstensorMean
 
-    def epochVal1(model, dataLoader, optimizer, scheduler, epochMax, classCount, loss):
-
-        outLoss = torch.FloatTensor()
-        outLoss = outLoss.cuda()
-        losstensorMean = torch.FloatTensor()
-        losstensorMean = losstensorMean.cuda()
-
-        model.eval ()
-
-        print("Epoch evaluate...")
-        total = len(dataLoader)
-        for i, (input, target) in enumerate (dataLoader):
-            print("Steps: {}/{}".format(i+1,total))
-            target = target.cuda(async=True)
-
-            varInput = torch.autograd.Variable(input, volatile=True)
-            varTarget = torch.autograd.Variable(target, volatile=True)
-            varOutput = model(varInput)
-            losstensor = loss(varOutput, varTarget)
-            losstensorMean = torch.cat((losstensorMean, losstensor), 0)
-            outLoss = torch.cat((outLoss, losstensor.data[0]), 0)
-
-        return torch.mean(outLoss), torch(losstensorMean)
-
     #--------------------------------------------------------------------------------
 
     #---- Computes area under ROC curve
@@ -203,6 +180,27 @@ class ChexnetTrainer ():
             outAUROC.append(roc_auc_score(datanpGT[:, i], datanpPRED[:, i]))
 
         return outAUROC
+
+    def splitResult(dataGT, dataPRED, imagePaths):
+        datanpGT = dataGT.cpu().numpy()
+        datanpPRED = dataPRED.cpu().numpy()
+        root_path = '/home/nthieuitus/bse_analyse'
+        for i in range(datanpGT.shape[0]):
+            for j in range(datanpGT.shape[1]):
+                if (datanpPRED[i,j] > 0.5 and datanpGT[i,j] == 1) or (datanpPRED[i,j] <= 0.5 and datanpGT[i,j] == 0):
+                    # Copy to right label
+                    folder_path = os.path.join(root_path, str(j), 'right')
+                    if not os.path.exists(folder_path):
+                        os.mkdir(folder_path)
+                    shutil.copy2(imagePaths[i], folder_path)
+                else:
+                    # Copy to wrong label
+                    print("Wrong prediction {}", imagePaths[i])
+                    folder_path = os.path.join(root_path, str(j), 'wrong')
+                    if not os.path.exists(folder_path):
+                        os.mkdir(folder_path)
+                    shutil.copy2(imagePaths[i], folder_path)
+
 
 
     #--------------------------------------------------------------------------------
@@ -275,19 +273,15 @@ class ChexnetTrainer ():
 
                 outPRED = torch.cat((outPRED, outMean.data), 0)
 
-        print("Result shape")
-        print(outGT.shape, outPRED.shape)
-        print("Result")
-        print(outGT)
-        print(outPRED)
+        ChexnetTrainer.splitResult(outGT, outPRED, datasetTest.listImagePaths)
         aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
+
         aurocMean = np.array(aurocIndividual).mean()
 
         print ('\nAUROC mean ', aurocMean)
 
         for i in range (0, len(aurocIndividual)):
             print (CLASS_NAMES[i], ' ', aurocIndividual[i])
-
 
         return
 #--------------------------------------------------------------------------------
