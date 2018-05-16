@@ -16,6 +16,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 import torch.nn.functional as func
 
 from sklearn.metrics.ranking import roc_auc_score
+from sklearn.metrics import roc_curve
 
 from DensenetModels import DenseNet121
 from DensenetModels import DenseNet169
@@ -186,9 +187,31 @@ class ChexnetTrainer ():
         datanpPRED = dataPRED.cpu().numpy()
         root_path = '/home/nthieuitus/bse_analyse'
         analyse_dict = {}
+        class_thresholds = []
+
+        for i in range(datanpGT.shape[1]):
+            fpr, tpr, thresholds = roc_curve(datanpGT[:, i], datanpPRED[:, i]), pos_label=1)
+            print('Class {}'.format(i))
+            print("Thresholds")
+            print(thresholds)
+            print("TPR")
+            print(tpr)
+            print("FPR")
+            print(fpr)
+            chosen = thresholds[0]
+            for j in range(len(fpr)):
+                if tpr[j] > 0.5 and fpr[j] < 0.3:
+                    chosen = thresholds[j]
+                else:
+                    break
+            class_thresholds.append(chosen)
+
+        print("Thresholds for all classes")
+        print(class_thresholds)
+
         for i in range(datanpGT.shape[0]):
             for j in range(datanpGT.shape[1]):
-                if (datanpPRED[i,j] > 0.5 and datanpGT[i,j] == 1) or (datanpPRED[i,j] <= 0.5 and datanpGT[i,j] == 0):
+                if (datanpPRED[i,j] > class_thresholds[i] and datanpGT[i,j] == 1) or (datanpPRED[i,j] <= class_thresholds[i] and datanpGT[i,j] == 0):
                     # Copy to right label
                     folder_path = os.path.join(root_path, str(j), 'right')
                     if not os.path.exists(folder_path):
@@ -205,6 +228,8 @@ class ChexnetTrainer ():
                     folder_path = os.path.join(root_path, str(j), 'wrong')
                     if not os.path.exists(folder_path):
                         os.makedirs(folder_path)
+                    counter = analyse_dict.get(folder_path, 0)
+                    counter += 1
                     analyse_dict[folder_path] = counter
                     if counter > 20:
                         continue
