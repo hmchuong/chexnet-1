@@ -275,6 +275,11 @@ class ChexnetTrainer ():
 
                 outPRED = torch.cat((outPRED, outMean.data), 0)
 
+        print("Result shape")
+        print(outGT.shape, outPRED.shape)
+        print("Result")
+        print(outGT)
+        print(outPRED)
         aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
         aurocMean = np.array(aurocIndividual).mean()
 

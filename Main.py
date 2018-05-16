@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    #runTest()
-    runTrain()
+    runTest()
+    #runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -26,6 +26,7 @@ def runTrain():
     #---- Path to the directory with images
     #pathDirData = '/home/nthieuitus/bse_chestxray'
     pathDirData = '/home/nthieuitus/chestxray'
+    pathDirData = '/home/nthieuitus/inverted_bse_chestxray'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
@@ -36,12 +37,12 @@ def runTrain():
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
-    nnArchitecture = DENSENET201
+    nnArchitecture = DENSENET121
     nnIsTrained = True
     nnClassCount = 14
 
     #---- Training settings: batch size, maximum number of epochs
-    trBatchSize = 128
+    trBatchSize = 200
     trMaxEpoch = 100
 
     #---- Parameters related to image transforms: size of the down-scaled image, cropped image
@@ -60,7 +61,7 @@ def runTrain():
 
 def runTest():
 
-    pathDirData = '/home/nthieuitus/bse_chestxray'
+    pathDirData = '/home/nthieuitus/AA.pth.tar'
     #pathDirData = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
     pathFileTest = './dataset/test_1.txt'
     nnArchitecture = 'DENSE-NET-201'
@@ -70,7 +71,7 @@ def runTest():
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'm-15052018-030501.pth.tar'
+    pathModel = 'S3.pth.tar'
 
     timestampLaunch = ''
 
