@@ -199,13 +199,6 @@ class ChexnetTrainer ():
                 if ((1-tpr[0])**2 + fpr[j]**2) <= min_distance**2 and thresholds[j] < 1:
                     chosen = j
                     min_distance = math.sqrt((1-tpr[0])**2 + (fpr[j])**2)
-            if thresholds[chosen] >= 1.0:
-                print("Thresholds {}".format(j))
-                print(thresholds)
-                print("TPR")
-                print(tpr)
-                print("FPR")
-                print(fpr)
 
             class_thresholds.append(thresholds[chosen])
 
@@ -238,6 +231,38 @@ class ChexnetTrainer ():
                         continue
                     shutil.copy2(imagePaths[i], folder_path)
 
+    def predict(dataGT, dataPRED, imagePaths, filename):
+        datanpGT = dataGT.cpu().numpy()
+        datanpPRED = dataPRED.cpu().numpy()
+        class_thresholds = []
+        for i in range(datanpGT.shape[1]):
+            fpr, tpr, thresholds = roc_curve(datanpGT[:, i], datanpPRED[:, i], pos_label=1)
+
+            chosen_index = 0
+            min_distance = 1000000
+            for j in range(len(fpr)):
+                if ((1-tpr[0])**2 + fpr[j]**2) <= min_distance**2 and thresholds[j] < 1:
+                    chosen = j
+                    min_distance = math.sqrt((1-tpr[0])**2 + (fpr[j])**2)
+
+            class_thresholds.append(thresholds[chosen])
+        print("Thresholds", class_thresholds)
+
+        lines = []
+
+        for i in range(datanpGT.shape[0]):
+            line = [os.path.basename(imagePaths[i])]
+            for j in range(datanpGT.shape[1]):
+                if (datanpPRED[i,j] > class_thresholds[j] and datanpGT[i,j] == 1) or (datanpPRED[i,j] <= class_thresholds[j] and datanpGT[i,j] == 0):
+                    # Right label
+                    line.append("1")
+                else:
+                    # Wrong label
+                    line.append("0")
+            lines.append(" ".join(line))
+        with open(filename, "w") as f:
+            f.write('\n'.join(lines))
+
 
 
     #--------------------------------------------------------------------------------
@@ -256,7 +281,7 @@ class ChexnetTrainer ():
     #---- launchTimestamp - date/time, used to assign unique name for the checkpoint file
     #---- checkpoint - if not None loads the model and continues training
 
-    def test (pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, transResize, transCrop, launchTimeStamp):
+    def test (pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, transResize, transCrop, launchTimeStamp, predict_output):
 
 
         CLASS_NAMES = [ 'Atelectasis', 'Cardiomegaly', 'Effusion', 'Infiltration', 'Mass', 'Nodule', 'Pneumonia',
@@ -310,7 +335,8 @@ class ChexnetTrainer ():
 
                 outPRED = torch.cat((outPRED, outMean.data), 0)
 
-        ChexnetTrainer.splitResult(outGT, outPRED, datasetTest.listImagePaths)
+        #ChexnetTrainer.splitResult(outGT, outPRED, datasetTest.listImagePaths)
+        ChexnetTrainer.predict(outGT, outPRED, datasetTest.listImagePaths, predict_output)
         aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
 
         aurocMean = np.array(aurocIndividual).mean()
