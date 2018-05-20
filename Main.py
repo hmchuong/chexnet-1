@@ -39,7 +39,7 @@ def runTrain():
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
     nnArchitecture = DENSENET121
-    nnIsTrained = True
+    nnIsTrained = False
     nnClassCount = 14
 
     #---- Training settings: batch size, maximum number of epochs
