@@ -281,7 +281,7 @@ class ChexnetTrainer ():
     #---- launchTimestamp - date/time, used to assign unique name for the checkpoint file
     #---- checkpoint - if not None loads the model and continues training
 
-    def test (pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, transResize, transCrop, launchTimeStamp, predict_output):
+    def test (pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, transResize, transCrop, launchTimeStamp, predict_output=''):
 
 
         CLASS_NAMES = [ 'Atelectasis', 'Cardiomegaly', 'Effusion', 'Infiltration', 'Mass', 'Nodule', 'Pneumonia',
@@ -336,7 +336,7 @@ class ChexnetTrainer ():
                 outPRED = torch.cat((outPRED, outMean.data), 0)
 
         #ChexnetTrainer.splitResult(outGT, outPRED, datasetTest.listImagePaths)
-        ChexnetTrainer.predict(outGT, outPRED, datasetTest.listImagePaths, predict_output)
+        #ChexnetTrainer.predict(outGT, outPRED, datasetTest.listImagePaths, predict_output)
         aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
 
         aurocMean = np.array(aurocIndividual).mean()
