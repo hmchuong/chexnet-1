@@ -238,7 +238,8 @@ class ChexnetTrainer ():
             lines = []
             for i in range(datanpPRED.shape[0]):
                 line = [os.path.basename(imagePaths[i])]
-                line.extend(list(datanpPRED[i]))
+                for element in datanpPRED[i]:
+                    line.append(str(element))
                 lines.append(" ".join(line))
             f.write('\n'.join(lines))
         # class_thresholds = []
@@ -352,6 +353,6 @@ class ChexnetTrainer ():
         #
         # for i in range (0, len(aurocIndividual)):
         #     print (CLASS_NAMES[i], ' ', aurocIndividual[i])
-        # 
+        #
         # return
 #--------------------------------------------------------------------------------
