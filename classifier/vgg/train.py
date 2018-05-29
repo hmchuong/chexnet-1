@@ -188,7 +188,7 @@ class Vgg19:
         self.Y = tf.placeholder(tf.float32, [None, 2], name='Y')
 
         # Define cost function
-        self.cost = tf.reduce_sum((self.prob - self.Y) ** 2)
+        self.cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=self.prob, labels=self.Y))#tf.reduce_sum((self.prob - self.Y) ** 2)
         # Define optimization method
         self.optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(self.cost)
 
@@ -263,8 +263,8 @@ def main(unused_argv):
   sess = tf.Session()
   vgg = Vgg19(sess=sess)
   start = time.time()
-  vgg.train(learning_rate=0.001, training_epochs=40, batch_size=128)
-  vgg.evaluate(batch_size=128)
+  vgg.train(learning_rate=0.001, training_epochs=40, batch_size=16)
+  vgg.evaluate(batch_size=16)
   end = time.time()
   print("Total time: {} seconds".format(end - start))
 
