@@ -345,14 +345,14 @@ class ChexnetTrainer ():
 
         #ChexnetTrainer.splitResult(outGT, outPRED, datasetTest.listImagePaths)
         ChexnetTrainer.predict(outGT, outPRED, datasetTest.listImagePaths, predict_output)
-        # aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
-        #
-        # aurocMean = np.array(aurocIndividual).mean()
-        #
-        # print ('\nAUROC mean ', aurocMean)
-        #
-        # for i in range (0, len(aurocIndividual)):
-        #     print (CLASS_NAMES[i], ' ', aurocIndividual[i])
-        #
-        # return
+        aurocIndividual = ChexnetTrainer.computeAUROC(outGT, outPRED, nnClassCount)
+
+        aurocMean = np.array(aurocIndividual).mean()
+
+        print ('\nAUROC mean ', aurocMean)
+
+        for i in range (0, len(aurocIndividual)):
+            print (CLASS_NAMES[i], ' ', aurocIndividual[i])
+
+        return
 #--------------------------------------------------------------------------------

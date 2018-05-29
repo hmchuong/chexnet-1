@@ -64,7 +64,7 @@ def runTest():
 
     pathDirData = '/home/nthieuitus/bse_chestxray'
     pathDirData_origin = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
-    pathFileTest = './dataset/test_1.txt'
+    pathFileTest = './dataset/test_2.txt'
     nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
@@ -77,8 +77,8 @@ def runTest():
 
     timestampLaunch = ''
 
-    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_bse.csv")
-    ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_origin.csv")
+    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_bse_euqal.txt")
+    #ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_origin.csv")
 
 #--------------------------------------------------------------------------------
 
