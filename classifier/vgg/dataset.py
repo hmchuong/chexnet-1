@@ -24,9 +24,9 @@ class DataSet:
         return self.eval_data.shape[0]
 
     def to_one_hot(self, X):
-        one_hot = np.zeros((len(X), 1))
+        one_hot = np.zeros((len(X), 2))
         for i in range(len(X)):
-            np.put(one_hot[i, :], 0, X[i])
+            np.put(one_hot[i, :], X[i], 1)
         #pdb.set_trace()
         return one_hot
 

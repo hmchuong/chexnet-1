@@ -93,7 +93,7 @@ class Vgg19:
         elif self.trainable:
             self.relu7 = tf.nn.dropout(self.relu7, self.dropout)
 
-        self.fc8 = self.fc_layer(self.relu7, 4096, 1, "fc8")
+        self.fc8 = self.fc_layer(self.relu7, 4096, 2, "fc8")
 
         self.prob = tf.nn.softmax(self.fc8, name="prob")
 
@@ -185,10 +185,10 @@ class Vgg19:
         # Load dataset for training and testing
         self.dataset = DataSet()
 
-        self.Y = tf.placeholder(tf.float32, [None, 1], name='Y')
+        self.Y = tf.placeholder(tf.float32, [None, 2], name='Y')
 
         # Define cost function
-        self.cost = tf.reduce_mean(tf.keras.backend.binary_crossentropy(self.Y, self.prob,from_logits=True))#(logits=self.prob, labels=self.Y))#tf.reduce_sum((self.prob - self.Y) ** 2)
+        self.cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=self.logits, labels=self.Y))#(logits=self.prob, labels=self.Y))#tf.reduce_sum((self.prob - self.Y) ** 2)
         # Define optimization method
         self.optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(self.cost)
 
@@ -261,17 +261,10 @@ class Vgg19:
 
 def main(unused_argv):
   sess = tf.Session()
-  # vgg = Vgg19(sess=sess)
-  # start = time.time()
-  # vgg.train(learning_rate=0.001, training_epochs=40, batch_size=16)
-  # vgg.evaluate(batch_size=16)
-  self.dataset = DataSet()
-  Y = tf.placeholder(tf.float32, [None, 1], name='Y')
-  X = tf.keras.Input(shape=(None, 224, 224, 3))#tf.placeholder(tf.float32, [None, 224, 224, 3], name='X')
-
-  vgg = tf.keras.applications.VGG19(include_top=True,weights='imagenet',input_tensor=X,classes=2)
-
-
+  vgg = Vgg19(sess=sess)
+  start = time.time()
+  vgg.train(learning_rate=0.001, training_epochs=40, batch_size=16)
+  vgg.evaluate(batch_size=16)
   end = time.time()
   print("Total time: {} seconds".format(end - start))
 

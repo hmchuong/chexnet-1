@@ -44,7 +44,7 @@ def runTrain():
     nnClassCount = 2
 
     #---- Training settings: batch size, maximum number of epochs
-    trBatchSize = 200
+    trBatchSize = 128
     trMaxEpoch = 100
 
     #---- Parameters related to image transforms: size of the down-scaled image, cropped image
@@ -54,10 +54,10 @@ def runTrain():
     pathModel = 'm-' + timestampLaunch + '.pth.tar'
 
     print ('Training NN architecture = ', nnArchitecture)
-    ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
+    #ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
 
     print ('Testing the trained model')
-    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch)
+    ChexnetTrainer.test(pathDirData, pathFileTest, 'm-29052018-161423.pth.tar', nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch)
 
 #--------------------------------------------------------------------------------
 
