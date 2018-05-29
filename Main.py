@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    runTest()
-    #runTrain()
+    #runTest()
+    runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -27,20 +27,21 @@ def runTrain():
     #pathDirData = '/home/nthieuitus/bse_chestxray'
     #pathDirData = '/home/nthieuitus/chestxray'
     #pathDirData = '/home/nthieuitus/inverted_bse_chestxray'
-    pathDirData = '/home/nthieuitus/bse_equalization'
+    #pathDirData = '/home/nthieuitus/bse_equalization'
+    pathDirData = '/home/nthieuitus/chexnet-1/worst_best_images'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
     #---- Example: images_011/00027736_001.png 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-    pathFileTrain = './dataset/train_1.txt'
-    pathFileVal = './dataset/val_1.txt'
-    pathFileTest = './dataset/test_1.txt'
+    pathFileTrain = './dataset/wb_train.txt'
+    pathFileVal = './dataset/wb_val.txt'
+    pathFileTest = './dataset/wb_test.txt'
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
     nnArchitecture = DENSENET121
     nnIsTrained = False
-    nnClassCount = 14
+    nnClassCount = 2
 
     #---- Training settings: batch size, maximum number of epochs
     trBatchSize = 200
