@@ -1,3 +1,8 @@
 /.ipynb_checkpoints/
 /log_train/
 /__pycache__/
+/NormalizeContrast.ipynb
+/test_data.npy
+/test_label.npy
+/train_data.npy
+/train_label.npy
