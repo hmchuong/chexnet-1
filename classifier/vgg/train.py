@@ -263,8 +263,8 @@ def main(unused_argv):
   sess = tf.Session()
   vgg = Vgg19(sess=sess)
   start = time.time()
-  vgg.train(learning_rate=0.001, training_epochs=40, batch_size=16)
-  vgg.evaluate(batch_size=16)
+  vgg.train(learning_rate=0.001, training_epochs=40, batch_size=128)
+  vgg.evaluate(batch_size=128)
   end = time.time()
   print("Total time: {} seconds".format(end - start))
 
