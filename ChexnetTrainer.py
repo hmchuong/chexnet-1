@@ -292,9 +292,9 @@ class ChexnetTrainer ():
     def test (pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, transResize, transCrop, launchTimeStamp, predict_output=''):
 
 
-        #CLASS_NAMES = [ 'Atelectasis', 'Cardiomegaly', 'Effusion', 'Infiltration', 'Mass', 'Nodule', 'Pneumonia',
+        CLASS_NAMES = [ 'Atelectasis', 'Cardiomegaly', 'Effusion', 'Infiltration', 'Mass', 'Nodule', 'Pneumonia',
                 #'Pneumothorax', 'Consolidation', 'Edema', 'Emphysema', 'Fibrosis', 'Pleural_Thickening', 'Hernia']
-        CLASS_NAMES = ['WORST', 'BEST']
+        #CLASS_NAMES = ['WORST', 'BEST']
 
         cudnn.benchmark = True
 

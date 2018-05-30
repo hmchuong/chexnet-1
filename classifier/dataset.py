@@ -10,10 +10,10 @@ import pdb
 
 class DataSet:
     def __init__(self):
-        self.train_data = np.load('train_data.npy')  # Returns np.array
-        self.train_labels = np.load('train_label.npy')
-        self.eval_data = np.load('test_data.npy')
-        self.eval_labels = np.load('test_label.npy')
+        self.train_data = np.load('hist_train_data.npy')  # Returns np.array
+        self.train_labels = np.load('hist_train_label.npy')
+        self.eval_data = np.load('hist_test_data.npy')
+        self.eval_labels = np.load('hist_test_label.npy')
         self.curr_training_step = 0
         self.curr_test_step = 0
 

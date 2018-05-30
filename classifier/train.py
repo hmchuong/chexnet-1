@@ -13,7 +13,7 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 class LeNet():
   def __init__(self, weights=None, sess=None, log=True):
-    self.X = tf.placeholder(tf.float32, [None, 224, 224, 1], name='X')
+    self.X = tf.placeholder(tf.float32, [None, 16, 16, 1], name='X')
     self.keep_prob = tf.placeholder(tf.float32, name='keep_prob')
     self.log = log
     self.sess = sess
@@ -128,7 +128,7 @@ class LeNet():
             # Get next batch to feed to the network
             batch_xs, batch_ys = self.dataset.next_batch(batch_size)
             feed_dict = {
-                self.X: batch_xs.reshape([batch_xs.shape[0], 224, 224, 1]),
+                self.X: batch_xs.reshape([batch_xs.shape[0], 16, 16, 1]),
                 self.Y: batch_ys,
                 self.keep_prob: keep_prob
             }
@@ -136,7 +136,7 @@ class LeNet():
             weights, summary, c, _ = self.sess.run([self.parameters, self.merged, self.cost, self.optimizer],
                                                    feed_dict=feed_dict)
             avg_cost += c / total_batch
-            print('Step:', '%02d/' % (i + 1), '%02d' % (total_batch), 'cost =', '{:.9f}'.format(c))
+            # print('Step:', '%02d/' % (i + 1), '%02d' % (total_batch), 'cost =', '{:.9f}'.format(c))
 
         if self.log:
             self.train_writer.add_summary(summary, epoch + 1)
@@ -163,7 +163,7 @@ class LeNet():
         N_batch = batch_xs.shape[0]
 
         feed_dict = {
-            self.X: batch_xs.reshape([N_batch, 224, 224, 1]),
+            self.X: batch_xs.reshape([N_batch, 16, 16, 1]),
             self.Y: batch_ys,
             self.keep_prob: keep_prob
         }
@@ -181,8 +181,8 @@ def main(unused_argv):
   sess = tf.Session()
   lenet = LeNet(sess=sess, weights=None)
   start = time.time()
-  lenet.train(learning_rate=0.001, training_epochs=40, batch_size=1000, keep_prob=0.7)
-  lenet.evaluate(batch_size=1000, keep_prob=0.7)
+  lenet.train(learning_rate=0.001, training_epochs=40, batch_size=16, keep_prob=0.7)
+  lenet.evaluate(batch_size=16, keep_prob=0.7)
   end = time.time()
   print("Total time: {} seconds".format(end - start))
 
