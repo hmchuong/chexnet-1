@@ -6,7 +6,7 @@ from multiprocessing import Pool
 
 def equalization(image_path, output_path):
     try:
-        bse_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        bse_image = bse_image = cv2.imread(image_path, 1)#cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
         # equ = cv2.equalizeHist(bse_image)
         # cv2.imwrite(output_path,equ)
         #-----Converting image to LAB Color model-----------------------------------
