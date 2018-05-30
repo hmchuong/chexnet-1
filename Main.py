@@ -29,8 +29,7 @@ def runTrain():
     #pathDirData = '/home/nthieuitus/chestxray'
     #pathDirData = '/home/nthieuitus/inverted_bse_chestxray'
     #pathDirData = '/home/nthieuitus/bse_equalization'
-    #pathDirData = '/home/nthieuitus/bse_equal'
-    pathDirData = '/home/minhchuong_itus/bse_chestxray'
+    pathDirData = '/home/nthieuitus/bse_equal'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
@@ -41,7 +40,7 @@ def runTrain():
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
-    nnArchitecture = RESNET152
+    nnArchitecture = DENSENET121
     nnIsTrained = True
     nnClassCount = 14
 
@@ -56,7 +55,7 @@ def runTrain():
     pathModel = 'm-' + timestampLaunch + '.pth.tar'
 
     print ('Training NN architecture = ', nnArchitecture)
-    ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
+    ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, 'CLAHE.pth.tar')
 
     print ('Testing the trained model')
     ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_bse_CLAHE.txt")
