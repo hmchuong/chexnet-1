@@ -18,6 +18,7 @@ def runTrain():
     DENSENET121 = 'DENSE-NET-121'
     DENSENET169 = 'DENSE-NET-169'
     DENSENET201 = 'DENSE-NET-201'
+    RESNET152 = 'RES-NET-152'
 
     timestampTime = time.strftime("%H%M%S")
     timestampDate = time.strftime("%d%m%Y")
@@ -39,7 +40,7 @@ def runTrain():
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
-    nnArchitecture = DENSENET121
+    nnArchitecture = RESNET152
     nnIsTrained = False
     nnClassCount = 14
 
