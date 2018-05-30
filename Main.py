@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    #runTest()
-    runTrain()
+    runTest()
+    #runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -64,17 +64,17 @@ def runTrain():
 
 def runTest():
 
-    pathDirData = '/home/nthieuitus/bse_chestxray'
+    pathDirData = '/home/nthieuitus/bse_equal'
     pathDirData_origin = '/home/nthieuitus/chestxray'
-    pathFileTest = './dataset/test_2.txt'
+    pathFileTest = './dataset/test_1.txt'
     nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
-    trBatchSize = 230
+    trBatchSize = 150
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'S3.pth.tar'
+    pathModel = 'CLAHE.pth.tar'#'S3.pth.tar'
     pathModel_origin = 'W.pth.tar'
 
     timestampLaunch = ''
