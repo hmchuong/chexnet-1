@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    runTest()
-    #runTrain()
+    #runTest()
+    runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -28,20 +28,20 @@ def runTrain():
     #pathDirData = '/home/nthieuitus/chestxray'
     #pathDirData = '/home/nthieuitus/inverted_bse_chestxray'
     #pathDirData = '/home/nthieuitus/bse_equalization'
-    pathDirData = '/home/nthieuitus/chexnet-1/worst_best_images'
+    pathDirData = '/home/nthieuitus/chexnet-1/bse_equal'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
     #---- Example: images_011/00027736_001.png 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-    pathFileTrain = './dataset/wb_train.txt'
-    pathFileVal = './dataset/wb_val.txt'
-    pathFileTest = './dataset/wb_test.txt'
+    pathFileTrain = './dataset/train_1.txt'
+    pathFileVal = './dataset/val_1.txt'
+    pathFileTest = './dataset/test_1.txt'
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
     nnArchitecture = DENSENET121
     nnIsTrained = False
-    nnClassCount = 2
+    nnClassCount = 14
 
     #---- Training settings: batch size, maximum number of epochs
     trBatchSize = 128
@@ -54,10 +54,10 @@ def runTrain():
     pathModel = 'm-' + timestampLaunch + '.pth.tar'
 
     print ('Training NN architecture = ', nnArchitecture)
-    #ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
+    ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, None)
 
     print ('Testing the trained model')
-    ChexnetTrainer.test(pathDirData, pathFileTest, 'm-29052018-161423.pth.tar', nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch)
+    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_bse_CLAHE.txt")
 
 #--------------------------------------------------------------------------------
 
