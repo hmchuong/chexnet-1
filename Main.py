@@ -41,7 +41,7 @@ def runTrain():
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
     nnArchitecture = RESNET152
-    nnIsTrained = False
+    nnIsTrained = True
     nnClassCount = 14
 
     #---- Training settings: batch size, maximum number of epochs
