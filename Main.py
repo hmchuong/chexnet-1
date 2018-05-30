@@ -29,7 +29,8 @@ def runTrain():
     #pathDirData = '/home/nthieuitus/chestxray'
     #pathDirData = '/home/nthieuitus/inverted_bse_chestxray'
     #pathDirData = '/home/nthieuitus/bse_equalization'
-    pathDirData = '/home/nthieuitus/bse_equal'
+    #pathDirData = '/home/nthieuitus/bse_equal'
+    pathDirData = '/home/minhchuong_itus/bse_chestxray'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
@@ -45,7 +46,7 @@ def runTrain():
     nnClassCount = 14
 
     #---- Training settings: batch size, maximum number of epochs
-    trBatchSize = 128
+    trBatchSize = 230
     trMaxEpoch = 100
 
     #---- Parameters related to image transforms: size of the down-scaled image, cropped image
