@@ -63,7 +63,7 @@ class ResNet152(nn.Module):
 
     def __init__ (self, classCount, isTrained):
 
-        super(ResNet201, self).__init__()
+        super(ResNet152, self).__init__()
 
         self.resnet152 = torchvision.models.resnet152(pretrained=isTrained)
 
