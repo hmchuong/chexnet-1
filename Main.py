@@ -28,7 +28,7 @@ def runTrain():
     #pathDirData = '/home/nthieuitus/chestxray'
     #pathDirData = '/home/nthieuitus/inverted_bse_chestxray'
     #pathDirData = '/home/nthieuitus/bse_equalization'
-    pathDirData = '/home/nthieuitus/chexnet-1/bse_equal'
+    pathDirData = '/home/nthieuitus/bse_equal'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
