@@ -67,9 +67,9 @@ class ResNet152(nn.Module):
 
         self.resnet152 = torchvision.models.resnet152(pretrained=isTrained)
 
-        kernelCount = self.resnet152.classifier.in_features
+        kernelCount = self.resnet152.fc.in_features
 
-        self.resnet152.classifier = nn.Sequential(nn.Linear(kernelCount, classCount), nn.Sigmoid())
+        self.resnet152.fc = nn.Sequential(nn.Linear(kernelCount, classCount), nn.Sigmoid())
 
     def forward (self, x):
         x = self.resnet152(x)
