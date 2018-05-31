@@ -88,7 +88,7 @@ class ChexnetTrainer ():
 
         #---- TRAIN THE NETWORK
 
-        lossMIN = 0.152
+        lossMIN = 1000
 
         for epochID in range (0, trMaxEpoch):
 
