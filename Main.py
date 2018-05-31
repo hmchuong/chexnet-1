@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    #runTest()
-    runTrain()
+    runTest()
+    #runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -74,7 +74,7 @@ def runTest():
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'CLAHE.pth.tar'#'S3.pth.tar'
+    pathModel = 'CLAHE-0153.pth.tar'#'S3.pth.tar'
     pathModel_origin = 'W.pth.tar'
 
     timestampLaunch = ''
