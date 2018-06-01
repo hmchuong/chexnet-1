@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    #runTest()
-    runTrain()
+    runTest()
+    #runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -70,17 +70,17 @@ def runTest():
     nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
-    trBatchSize = 150
+    trBatchSize = 16
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'CLAHE-0153.pth.tar'#'S3.pth.tar'
+    pathModel = 'CLAHE-0152.pth.tar'#'S3.pth.tar'
     pathModel_origin = 'W.pth.tar'
 
     timestampLaunch = ''
 
     ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_bse_CLAHE.txt")
-    #ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_origin.csv")
+    ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_normal.txt")
 
 #--------------------------------------------------------------------------------
 
