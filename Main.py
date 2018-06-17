@@ -74,7 +74,7 @@ def runTest():
     imgtransResize = 256
     imgtransCrop = 224
 
-    pathModel = 'S.pth.tar'#'S3.pth.tar'
+    pathModel = 'CLAHE-0152.pth.tar'#'S3.pth.tar'
     pathModel_origin = 'W.pth.tar'
 
     timestampLaunch = ''
