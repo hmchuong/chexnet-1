@@ -7,6 +7,8 @@ import tensorflow as tf
 import cv2
 from dataset import DataSet
 import time
+from sklearn.metrics.ranking import roc_curve
+import math
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
@@ -71,9 +73,9 @@ class LeNet():
     # fc1
     with tf.name_scope('fc1') as scope:
       shape = int(np.prod(self.pool2.get_shape()[1:]))
-      fc1w = tf.Variable(tf.random_normal([shape, 128],
+      fc1w = tf.Variable(tf.random_normal([shape, 1224],
         dtype=tf.float32, stddev=1e-1), name='weights')
-      fc1b = tf.Variable(tf.constant(1.0, shape=[128], dtype=tf.float32),
+      fc1b = tf.Variable(tf.constant(1.0, shape=[1224], dtype=tf.float32),
         trainable=True, name='biases')
       pool2_flat = tf.reshape(self.pool2, [-1, shape])
       fc1l = tf.nn.bias_add(tf.matmul(pool2_flat, fc1w), fc1b)
@@ -83,7 +85,7 @@ class LeNet():
 
     # fc2
     with tf.name_scope('fc2') as scope:
-      fc2w = tf.Variable(tf.random_normal([128, 2],
+      fc2w = tf.Variable(tf.random_normal([1224, 2],
         dtype=tf.float32, stddev=1e-1), name='weights')
       fc2b = tf.Variable(tf.constant(1.0, shape=[2], dtype=tf.float32),
         trainable=True, name='biases')
@@ -150,7 +152,6 @@ class LeNet():
     print("Trainned model is saved in file: %s" % save_path)
 
   def evaluate(self, batch_size, keep_prob):
-
     self.correct_prediction = tf.equal(tf.argmax(self.logits, 1), tf.argmax(self.Y, 1))
     self.accuracy = tf.reduce_mean(tf.cast(self.correct_prediction, tf.float32))
 
@@ -161,7 +162,7 @@ class LeNet():
         batch_xs, batch_ys = self.dataset.next_batch_test(batch_size)
 
         N_batch = batch_xs.shape[0]
-        print("SHAPE ", batch_xs.shape)
+
         feed_dict = {
             self.X: batch_xs.reshape([N_batch, 224, 224, 1]),
             self.Y: batch_ys,
@@ -177,11 +178,54 @@ class LeNet():
     print("-" * 30)
     print('Test Accuracy:', test_accuracy)
 
+    #self.correct_prediction = tf.equal(tf.argmax(self.logits, 1), tf.argmax(self.Y, 1))
+    #self.accuracy = tf.reduce_mean(tf.cast(self.correct_prediction, tf.float32))
+
+    # N = self.dataset.get_test_set_size()
+    # print('test.size', N);
+    # correct_sample = 0
+    # datanpGT = []
+    # datanpPRED = []
+    # for i in range(0, N, batch_size):
+    #     batch_xs, batch_ys = self.dataset.next_batch_test(batch_size)
+    #     datanpGT.extend(batch_ys)
+    #     N_batch = batch_xs.shape[0]
+    #     feed_dict = {
+    #         self.X: batch_xs.reshape([N_batch, 224, 224, 1]),
+    #         self.Y: batch_ys,
+    #         self.keep_prob: keep_prob
+    #     }
+    #
+    #     #correct = self.sess.run(self.accuracy, feed_dict=feed_dict)
+    #     datanpPRED.extend(self.sess.run(self.logits, feed_dict=feed_dict))
+    #     #correct_sample += correct * N_batch
+    #
+    # datanpGT = np.asarray(datanpGT)
+    # datanpPRED = np.asarray(datanpPRED)
+    # class_thresholds = []
+    #
+    # print(datanpPRED)
+    #
+    # for i in range(datanpGT.shape[1]):
+    #     fpr, tpr, thresholds = roc_curve(datanpGT[:, i], datanpPRED[:, i], pos_label=1)
+    #     print("ROC", tpr, fpr, thresholds)
+    #     chosen_index = 0
+    #     min_distance = 1000000
+    #     for j in range(len(fpr)):
+    #         if ((1-tpr[0])**2 + fpr[j]**2) <= min_distance**2 and thresholds[j] < 1:
+    #             chosen = j
+    #             min_distance = math.sqrt((1-tpr[0])**2 + (fpr[j])**2)
+    #
+    #     class_thresholds.append(thresholds[chosen])
+    #
+    # print("Thresholds for all classes")
+    # print(class_thresholds)
+
 def main(unused_argv):
   sess = tf.Session()
   lenet = LeNet(sess=sess, weights=None)
   start = time.time()
-  lenet.train(learning_rate=0.01, training_epochs=1, batch_size=128, keep_prob=0.7)
+  lenet.train(learning_rate=0.001, training_epochs=1, batch_size=16, keep_prob=0.7)
   lenet.evaluate(batch_size=16, keep_prob=0.7)
   end = time.time()
   print("Total time: {} seconds".format(end - start))
