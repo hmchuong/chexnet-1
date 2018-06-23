@@ -10,7 +10,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def equalization(image_path, output_path):
     try:
-        pil_image = PIL.Image.open(image_path).convert('RGB')
+        pil_image = Image.open(image_path).convert('RGB')
         bse_image = np.array(pil_image)#cv2.imread(image_path, 1)#cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
         bse_image = bse_image[:, :, ::-1].copy()
         # equ = cv2.equalizeHist(bse_image)
