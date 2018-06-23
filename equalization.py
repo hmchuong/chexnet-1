@@ -3,10 +3,16 @@ import os
 import cv2
 import numpy as np
 from multiprocessing import Pool
+from PIL import ImageFile
+from PIL import Image
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def equalization(image_path, output_path):
     try:
-        bse_image = bse_image = cv2.imread(image_path, 1)#cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        pil_image = PIL.Image.open(image_path).convert('RGB')
+        bse_image = np.array(pil_image)#cv2.imread(image_path, 1)#cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        bse_image = bse_image[:, :, ::-1].copy()
         # equ = cv2.equalizeHist(bse_image)
         # cv2.imwrite(output_path,equ)
         #-----Converting image to LAB Color model-----------------------------------
