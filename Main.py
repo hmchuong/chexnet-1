@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    #runTest()
-    runTrain()
+    runTest()
+    #runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -65,8 +65,9 @@ def runTrain():
 def runTest():
 
     pathDirData = '/home/minhchuong_itus/bse_CLAHE_chestxray'
-    pathDirData_origin = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
-    pathFileTest = './dataset/val_1.txt'
+    #pathDirData_origin = '/home/minhchuong_itus/chexnet/CheXNet/ChestX-ray14'
+    pathDirData_origin = '/home/minhchuong_itus/CLAHE_chestxray'
+    pathFileTest = './dataset/test_1.txt'
     nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
@@ -79,11 +80,11 @@ def runTest():
 
     timestampLaunch = ''
 
-    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_val_bse.txt")
-    ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_val_normal.txt")
-    pathFileTest = './dataset/train_1.txt'
-    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_train_bse.txt")
-    ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_train_normal.txt")
+    #ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_val_bse.txt")
+    ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "2306predict_bse_test_normal.txt")
+    # pathFileTest = './dataset/train_1.txt'
+    # ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_train_bse.txt")
+    # ChexnetTrainer.test(pathDirData_origin, pathFileTest, pathModel_origin, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_train_normal.txt")
 
 #--------------------------------------------------------------------------------
 
