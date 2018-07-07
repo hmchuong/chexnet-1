@@ -73,7 +73,7 @@ class ChexnetTrainer ():
         dataLoaderVal = DataLoader(dataset=datasetVal, batch_size=trBatchSize, shuffle=False, num_workers=24, pin_memory=True)
 
         #-------------------- SETTINGS: OPTIMIZER & SCHEDULER
-        optimizer = optim.Adam (model.parameters(), lr=0.0000001, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-5)
+        optimizer = optim.Adam (model.parameters(), lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-5)
         scheduler = ReduceLROnPlateau(optimizer, factor = 0.1, patience = 5, mode = 'min')
 
         #-------------------- SETTINGS: LOSS
