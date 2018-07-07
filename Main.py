@@ -9,8 +9,8 @@ from ChexnetTrainer import ChexnetTrainer
 
 def main ():
 
-    runTest()
-    #runTrain()
+    #runTest()
+    runTrain()
 
 #--------------------------------------------------------------------------------
 def runTrain():
@@ -29,14 +29,14 @@ def runTrain():
     #pathDirData = '/home/nthieuitus/chestxray'
     #pathDirData = '/home/nthieuitus/inverted_bse_chestxray'
     #pathDirData = '/home/nthieuitus/bse_equalization'
-    pathDirData = '/home/minhchuong_itus/bse_CLAHE_chestxray'
+    pathDirData = '/home/minhchuong_itus/bse_chestxray_clahe'
 
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
     #---- Example: images_011/00027736_001.png 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-    pathFileTrain = './dataset/bse/train.txt'
-    pathFileVal = './dataset/bse/val.txt'
-    pathFileTest = './dataset/bse/test.txt'
+    pathFileTrain = './dataset/train_1.txt'
+    pathFileVal = './dataset/val_1.txt'
+    pathFileTest = './dataset/test_1.txt'
 
     #---- Neural network parameters: type of the network, is it pre-trained
     #---- on imagenet, number of classes
@@ -46,7 +46,7 @@ def runTrain():
 
     #---- Training settings: batch size, maximum number of epochs
     trBatchSize = 16
-    trMaxEpoch = 2
+    trMaxEpoch = 100
 
     #---- Parameters related to image transforms: size of the down-scaled image, cropped image
     imgtransResize = 256
@@ -58,7 +58,7 @@ def runTrain():
     ChexnetTrainer.train(pathDirData, pathFileTrain, pathFileVal, nnArchitecture, nnIsTrained, nnClassCount, trBatchSize, trMaxEpoch, imgtransResize, imgtransCrop, timestampLaunch, 'CLAHE-0152.pth.tar')
 
     print ('Testing the trained model')
-    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_bse_CLAHE_1906.txt")
+    ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch, "predict_bse_CLAHE_0707.txt")
 
 #--------------------------------------------------------------------------------
 

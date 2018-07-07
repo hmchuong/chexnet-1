@@ -96,6 +96,7 @@ class HeatmapGenerator ():
         npHeatmap = heatmap.cpu().data.numpy()
 
         imgOriginal = cv2.imread(pathImageFile, 1)
+        img = imgOriginal.copy()
         try:
             imgOriginal = cv2.resize(imgOriginal, (transCrop, transCrop))
         except:
@@ -119,12 +120,12 @@ class HeatmapGenerator ():
             value = evaluated.get(file, (0,))
             evaluated[file] = (value[0], np.mean(newCam[y:y+h, x:x+w]))
 
-        cam = cv2.resize(cam, (transCrop, transCrop))
+        cam = cv2.resize(cam, (1024, 1024))
         heatmap = cv2.applyColorMap(np.uint8(255*cam), cv2.COLORMAP_JET)
 
-        img = heatmap * 0.5 + imgOriginal
+        img = heatmap * 0.5 + img
 
-        #cv2.imwrite(pathOutputFile, img)
+        cv2.imwrite(pathOutputFile, img)
 
 #--------------------------------------------------------------------------------
 
@@ -137,10 +138,10 @@ nnClassCount = 14
 
 transCrop = 224
 
-origin_input = "/Volumes/Ryan/CheXNet/test_visualization/origin_choosing_bse"
-origin_output = "/Volumes/Ryan/CheXNet/test_visualization/origin_choosing_bse_heatmap"
-bse_input = "/Volumes/Ryan/CheXNet/test_visualization/bse_choosing_bse"
-bse_output = "/Volumes/Ryan/CheXNet/test_visualization/bse_choosing_bse_heatmap"
+origin_input = "/Volumes/Ryan/CheXNet/test_visualization/report/origin"
+origin_output = "/Volumes/Ryan/CheXNet/test_visualization/report/origin_heatmap"
+bse_input = "/Volumes/Ryan/CheXNet/test_visualization/report/bse"
+bse_output = "/Volumes/Ryan/CheXNet/test_visualization/report/bse_heatmap"
 
 h = HeatmapGenerator('models/W.pth.tar', nnArchitecture, nnClassCount, transCrop)
 for file in os.listdir(origin_input):
@@ -158,11 +159,11 @@ for file in os.listdir(bse_input):
     pathOutputImage = os.path.join(bse_output, file)
     h.generate(pathInputImage, pathOutputImage, transCrop, isBSE=True)
 
-evaluateFile = open("new_evaluate.csv", "w")
-for key, value in evaluated.items():
-    if len(value) < 2:
-        continue
-    result = 'origin' if value[1] - value[0] >= 50 else 'bse'
-    evaluateFile.write("{},{},{},{}\n".format(key, value[0], value[1], result))
-
-evaluateFile.close()
+# evaluateFile = open("new_evaluate.csv", "w")
+# for key, value in evaluated.items():
+#     if len(value) < 2:
+#         continue
+#     result = 'origin' if value[1] - value[0] >= 50 else 'bse'
+#     evaluateFile.write("{},{},{},{}\n".format(key, value[0], value[1], result))
+#
+# evaluateFile.close()
